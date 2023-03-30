@@ -11,7 +11,8 @@ locals {
     ], [for i, v in var.azs :
     "azs_name_${i}=${data.aws_availability_zones.this[i].names[0]}"
     ], [
-    "cluster_name=${var.name}",
+    "cluster_endpoint=${module.eks.cluster_endpoint}",
+    "cluster_name=${module.eks.cluster_name}",
     "region=${var.region}",
     "vpc_id=${local.vpc_id}",
   ]))
@@ -24,10 +25,11 @@ resource "null_resource" "flux_cluster_vars" {
     account_id                 = var.account_id
     azs                        = join(",", [for i, v in var.azs : "${i}=${v}"])
     cluster_context            = local.cluster_context
+    cluster_endpoint           = module.eks.cluster_endpoint
+    cluster_name               = module.eks.cluster_name
     cluster_vars_checksum      = sha256(local.cluster_vars)
     flux_system_repository_url = local.flux_system_repository_url
     kubeconfig_parameter       = aws_ssm_parameter.kubeconfig.name
-    name                       = var.name
     region                     = var.region
     vpc_id                     = local.vpc_id
   }

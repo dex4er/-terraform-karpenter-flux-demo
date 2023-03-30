@@ -1,0 +1,36 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: karpenter
+  namespace: karpenter
+spec:
+  interval: 1m
+  timeout: 2m
+  maxHistory: 2
+  chart:
+    spec:
+      interval: 1m
+      chart: karpenter
+      ## https://github.com/aws/karpenter/blob/main/charts/karpenter/Chart.yaml#L5
+      version: v0.27.1
+      sourceRef:
+        kind: HelmRepository
+        name: karpenter
+      reconcileStrategy: Revision
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
+  values:
+    ## https://github.com/aws/karpenter/blob/main/charts/karpenter/values.yaml
+
+    serviceAccount:
+      annotations:
+        eks.amazonaws.com/role-arn: arn:aws:iam::${account_id}:role/${cluster_name}-irsa-karpenter
+
+    settings:
+      aws:
+        clusterName: ${cluster_name}
+        clusterEndpoint: ${cluster_endpoint}
+        defaultInstanceProfile: ${cluster_name}-karpenter
+        interruptionQueueName: ${cluster_name}-karpenter

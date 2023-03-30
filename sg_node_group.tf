@@ -32,6 +32,13 @@ module "sg_node_group" {
       protocol                 = "-1"
       source_security_group_id = module.sg_cluster.security_group_id
     },
+    {
+      description              = "Cluster API to Node group for Karpenter webhook"
+      from_port                = 8443
+      to_port                  = 8443
+      protocol                 = "tcp"
+      source_security_group_id = module.sg_cluster.security_group_id
+    },
   ]
 
   ingress_with_self = [
@@ -98,7 +105,8 @@ module "sg_node_group" {
   ]
 
   tags = {
-    Name   = "${var.name}-node-group"
-    Object = "module.sg_node_group"
+    Name                     = "${var.name}-node-group"
+    Object                   = "module.sg_node_group"
+    "karpenter.sh/discovery" = var.name
   }
 }

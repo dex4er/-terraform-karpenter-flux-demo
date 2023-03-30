@@ -6,4 +6,5 @@ resources:
   - aws-load-balancer-controller.yaml
   - cluster-autoscaler.yaml
   - flux-system.yaml
+  - karpenter.yaml
   - podinfo.yaml

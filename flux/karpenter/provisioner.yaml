@@ -1,0 +1,36 @@
+apiVersion: karpenter.sh/v1alpha5
+kind: Provisioner
+metadata:
+  name: karpenter
+spec:
+  providerRef:
+    name: karpenter
+  taints:
+    - key: node.dex4er.github.com/karpenter
+      value: "true"
+      effect: NoSchedule
+  labels:
+    node.dex4er.github.com/karpenter: "true"
+  requirements:
+    - key: karpenter.k8s.aws/instance-category
+      operator: In
+      values: [m]
+    - key: karpenter.k8s.aws/instance-generation
+      operator: In
+      values: ["5"]
+    - key: karpenter.k8s.aws/instance-cpu
+      operator: In
+      values: ["2"]
+    - key: topology.kubernetes.io/zone
+      operator: In
+      values: ["${azs_name_0}"]
+    - key: ubernetes.io/arch
+      operator: In
+      values: [amd64]
+    - key: karpenter.sh/capacity-type
+      operator: In
+      values: [spot]
+  kubeletConfiguration:
+    clusterDNS: [10.0.1.100]
+    containerRuntime: containerd
+    maxPods: 29
