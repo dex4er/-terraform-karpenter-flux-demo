@@ -1,4 +1,4 @@
-# terraform-eks-flux-demo
+# terraform-karpenter-flux-demo
 
 Demo of the application deployed in EKS cluster using Flux with OCI
 repository instead of Git repository.
@@ -9,7 +9,8 @@ EKS cluster has features:
   and master nodes in intra network
 - encrypted at rest
 - has customized nodes in self-managed node group
-- enabled autoscaler and AWS load balancer controller
+- enabled AWS load balancer controller
+- enabled Karpenter autoscaler
 - exposes podinfo application
 
 The demo uses https://github.com/terraform-aws-modules> modules. All modules and
@@ -182,7 +183,7 @@ admin_role_arns           = ["arn:aws:iam::123456789012:role/Admin"]
 admin_user_arns           = ["arn:aws:iam::123456789012:user/admin"]
 assume_role               = "arn:aws:iam::123456789012:role/Admin"
 azs                       = ["euc-az1", "euc-az2", "euc-az3"]
-name                      = "terraform-eks-flux-demo"
+name                      = "terraform-karpenter-flux-demo"
 region                    = "eu-central-1"
 ```
 
@@ -198,7 +199,7 @@ terraform apply
 ```sh
 terraform output
 # check for cluster_update_kubeconfig_command and run the command, ie.:
-aws eks update-kubeconfig --name terraform-eks-flux-demo --region eu-central-1 --role arn:aws:iam::123456789012:role/Admin
+aws eks update-kubeconfig --name terraform-karpenter-flux-demo --region eu-central-1 --role arn:aws:iam::123456789012:role/Admin
 ```
 
 - Connect to ingress:

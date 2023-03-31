@@ -5,10 +5,10 @@ metadata:
 spec:
   providerRef:
     name: karpenter
-  taints:
-    - key: node.dex4er.github.com/karpenter
-      value: "true"
-      effect: NoSchedule
+  # taints:
+  #   - key: node.dex4er.github.com/karpenter
+  #     value: "true"
+  #     effect: NoSchedule
   labels:
     node.dex4er.github.com/karpenter: "true"
   requirements:

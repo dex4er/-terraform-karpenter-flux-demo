@@ -7,10 +7,12 @@ locals {
       default = true
 
       labels = {
-        "node-group/default" = "true"
+        "node.dex4er.github.com/default" = "true"
       }
 
-      taints = {}
+      taints = {
+        "CriticalAddonsOnly" = "true:NoSchedule"
+      }
 
       max_pods = 29
 
@@ -42,9 +44,9 @@ locals {
       post_bootstrap_user_data = <<-EOT
       EOT
 
-      min_size     = 1
+      min_size     = 2
       max_size     = 4
-      desired_size = 1
+      desired_size = 2
 
       capacity_type = "SPOT"
 
@@ -181,25 +183,6 @@ module "eks_node_group" {
   ]
 
   service_linked_role_arn = local.service_linked_role_arn
-
-  autoscaling_group_tags = merge(
-    {
-      "k8s.io/cluster-autoscaler/enabled" : "true",
-      "k8s.io/cluster-autoscaler/${module.eks.cluster_name}" : "owned",
-      "k8s.io/cluster-autoscaler/node-template/label/eks.amazonaws.com/capacityType" = each.value.capacity_type
-    },
-    { for k, v in each.value.labels :
-      "k8s.io/cluster-autoscaler/node-template/label/${k}" => v
-    },
-    { for k, v in each.value.taints :
-      "k8s.io/cluster-autoscaler/node-template/taint/${k}" => v
-    },
-    {
-      "k8s.io/cluster-autoscaler/node-template/resources/cpu"    = try(try(each.value.resources.cpu, local.instance_resources[each.value.instance_type].cpu), "")
-      "k8s.io/cluster-autoscaler/node-template/resources/memory" = try(try(each.value.resources.memory, local.instance_resources[each.value.instance_type].memory), "")
-      "k8s.io/cluster-autoscaler/node-template/resources/pods"   = try(try(each.value.max_pods, local.instance_resources[each.value.instance_type].pods), "")
-    },
-  )
 
   tags = {
     Name      = "${var.name}-node-group-${each.key}"
