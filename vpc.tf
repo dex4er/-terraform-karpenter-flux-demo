@@ -46,7 +46,7 @@ module "vpc" {
       "kubernetes.io/role/elb"            = 1
     },
     var.cluster_in_private_subnet ? {} : {
-      "karpenter.sh/discovery" = "true"
+      "karpenter.sh/discovery" = var.name
     }
   )
 
@@ -57,7 +57,7 @@ module "vpc" {
       "kubernetes.io/role/internal-elb"   = 1
     },
     var.cluster_in_private_subnet ? {
-      "karpenter.sh/discovery" = "true"
+      "karpenter.sh/discovery" = var.name
     } : {}
   )
 

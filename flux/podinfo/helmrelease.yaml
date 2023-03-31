@@ -43,6 +43,15 @@ spec:
       limits:
         memory: 256Mi
 
+    nodeSelector:
+      node.dex4er.github.com/karpenter: "true"
+
+    tolerations:
+      - key: node.dex4er.github.com/karpenter
+        operator: Equal
+        value: "true"
+        effect: NoSchedule
+
     affinity:
       podAntiAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -52,4 +61,4 @@ spec:
                   operator: In
                   values:
                     - podinfo
-            topologyKey: "kubernetes.io/hostname"
+            topologyKey: kubernetes.io/hostname
