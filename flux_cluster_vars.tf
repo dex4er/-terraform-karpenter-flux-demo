@@ -14,6 +14,9 @@ locals {
     "cluster_endpoint=${module.eks.cluster_endpoint}",
     "cluster_name=${module.eks.cluster_name}",
     "region=${var.region}",
+    ], [for i, v in var.azs :
+    "subnet_id_${i}=${var.cluster_in_private_subnet ? module.vpc.private_subnets[i] : module.vpc.public_subnets[i]}"
+    ], [
     "vpc_id=${local.vpc_id}",
   ]))
 }

@@ -1,0 +1,14 @@
+apiVersion: karpenter.k8s.aws/v1alpha1
+kind: AWSNodeTemplate
+metadata:
+  name: karpenter
+spec:
+  subnetSelector:
+    # kubernetes.io/cluster/${cluster_name}: shared
+    aws-ids: ${subnet_id_0}
+  securityGroupSelector:
+    karpenter.sh/discovery/${cluster_name}: "*"
+  amiFamily: AL2
+  amiSelector:
+    aws::owners: amazon
+    aws::name: amazon-eks-node-1.24-v20230217
