@@ -19,7 +19,7 @@ locals {
       ## Node group only in first AZ
       azs = [local.azs_ids[0]]
 
-      instance_type = "m5.large"
+      instance_type = "m5d.large"
 
       ebs_optimized = false
 
