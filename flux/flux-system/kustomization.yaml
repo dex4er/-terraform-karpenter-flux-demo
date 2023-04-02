@@ -11,15 +11,6 @@ patches:
       spec:
         template:
           spec:
-            affinity:
-              nodeAffinity:
-                requiredDuringSchedulingIgnoredDuringExecution:
-                  nodeSelectorTerms:
-                    - matchExpressions:
-                        - key: node.dex4er.github.com/default
-                          operator: In
-                          values:
-                            - "true"
             tolerations:
               - effect: NoSchedule
                 key: CriticalAddonsOnly

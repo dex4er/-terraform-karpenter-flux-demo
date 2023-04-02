@@ -4,5 +4,7 @@ resources:
   - namespace.yaml
   - helmrepository.yaml
   - helmrelease.yaml
-  - awsnotetemplate.yaml
-  - provisioner.yaml
+  - awsnotetemplate-critical.yaml
+  - awsnotetemplate-default.yaml
+  - provisioner-critical.yaml
+  - provisioner-default.yaml

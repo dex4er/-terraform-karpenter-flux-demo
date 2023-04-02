@@ -1,7 +1,7 @@
 apiVersion: karpenter.k8s.aws/v1alpha1
 kind: AWSNodeTemplate
 metadata:
-  name: karpenter
+  name: default-1
 spec:
   subnetSelector:
     # karpenter.sh/discovery: ${cluster_name}

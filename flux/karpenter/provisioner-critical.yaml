@@ -1,16 +1,16 @@
 apiVersion: karpenter.sh/v1alpha5
 kind: Provisioner
 metadata:
-  name: karpenter
+  name: critical-1
 spec:
   providerRef:
-    name: karpenter
-  # taints:
-  #   - key: node.dex4er.github.com/karpenter
-  #     value: "true"
-  #     effect: NoSchedule
+    name: critical-1
+  taints:
+    - key: CriticalAddonsOnly
+      value: "true"
+      effect: NoSchedule
   labels:
-    node.dex4er.github.com/karpenter: "true"
+    node.dex4er.github.com/critical: "true"
   requirements:
     - key: karpenter.k8s.aws/instance-category
       operator: In
@@ -31,7 +31,8 @@ spec:
       operator: In
       values: [spot]
   kubeletConfiguration:
-    clusterDNS: [10.0.1.100]
+    clusterDNS: [10.100.0.10]
     containerRuntime: containerd
     maxPods: 29
   ttlSecondsAfterEmpty: 30
+  weight: 1

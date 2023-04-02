@@ -28,9 +28,22 @@ spec:
       annotations:
         eks.amazonaws.com/role-arn: arn:aws:iam::${account_id}:role/${cluster_name}-irsa-karpenter
 
+    ## default affinity forbids running on self-provisioned node
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/os
+                  operator: Exists
+
     settings:
       aws:
         clusterName: ${cluster_name}
         clusterEndpoint: ${cluster_endpoint}
         defaultInstanceProfile: ${cluster_name}-karpenter
         interruptionQueueName: ${cluster_name}-karpenter
+        ## set `true`` for private VPC subnet
+        isolatedVPC: false
+      featureGates:
+        driftEnabled: true
