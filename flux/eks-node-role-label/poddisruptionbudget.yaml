@@ -1,0 +1,11 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: eks-node-role-label
+  labels:
+    app: eks-node-role-label
+spec:
+  minAvailable: 0
+  selector:
+    matchLabels:
+      app: eks-node-role-label
