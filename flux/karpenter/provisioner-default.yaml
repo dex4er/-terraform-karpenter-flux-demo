@@ -34,5 +34,7 @@ spec:
     resources:
       cpu: 10k
       # memory: 40Gi
-  ttlSecondsAfterEmpty: 30
+  consolidation:
+    enabled: true
+  # ttlSecondsAfterEmpty: 30
   weight: 1
