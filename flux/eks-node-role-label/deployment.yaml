@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eks-node-role-label
+  labels:
+    app.kubernetes.io/name: eks-node-role-label
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: eks-node-role-label
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: eks-node-role-label
+    spec:
+      serviceAccountName: eks-node-role-label
+      containers:
+        - name: kubectl
+          image: bitnami/kubectl:1.24.10
+          command:
+            - /entrypoint/entrypoint.sh
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: "666"
+              memory: 64Mi
+          volumeMounts:
+            - name: entrypoint
+              mountPath: /entrypoint
+      tolerations:
+        - effect: NoSchedule
+          key: CriticalAddonsOnly
+          operator: Equal
+          value: "true"
+      volumes:
+        - name: entrypoint
+          configMap:
+            name: entrypoint
+            defaultMode: 0o755

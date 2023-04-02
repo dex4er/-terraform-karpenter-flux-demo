@@ -8,3 +8,4 @@ rules:
   key-duplicates: {}
   octal-values:
     forbid-implicit-octal: true
+    forbid-explicit-octal: false

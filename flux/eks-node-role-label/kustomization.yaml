@@ -4,7 +4,14 @@ namespace: eks-node-role-label
 resources:
   - clusterrole.yaml
   - clusterrolebinding.yaml
-  - cronjob.yaml
+  - deployment.yaml
   - namespace.yaml
   - poddisruptionbudget.yaml
   - serviceaccount.yaml
+configMapGenerator:
+  - name: entrypoint
+    files:
+      - files/entrypoint.sh
+generatorOptions:
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
