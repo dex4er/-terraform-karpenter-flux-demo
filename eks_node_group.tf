@@ -44,9 +44,9 @@ locals {
       post_bootstrap_user_data = <<-EOT
       EOT
 
-      min_size     = 2
-      max_size     = 4
-      desired_size = 2
+      min_size     = var.eks_initial_node_group ? 2 : 0
+      max_size     = var.eks_initial_node_group ? 4 : 0
+      desired_size = var.eks_initial_node_group ? 2 : 0
 
       capacity_type = "SPOT"
 

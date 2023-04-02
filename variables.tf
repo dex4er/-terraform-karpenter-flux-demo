@@ -38,6 +38,12 @@ variable "cluster_in_private_subnet" {
   description = "By default cluster is created in public subnet to lower montly costs of NAT gateway and service endpoints"
 }
 
+variable "eks_initial_node_group" {
+  type        = bool
+  default     = true
+  description = "Karpenter requires initial node group. It might migrate later to self-serviced provisioner."
+}
+
 variable "region" {
   type        = string
   description = "AWS region"
