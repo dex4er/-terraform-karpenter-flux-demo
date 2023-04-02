@@ -34,3 +34,4 @@ spec:
     clusterDNS: [10.0.1.100]
     containerRuntime: containerd
     maxPods: 29
+  ttlSecondsAfterEmpty: 30
