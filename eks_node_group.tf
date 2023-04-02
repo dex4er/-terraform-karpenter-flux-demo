@@ -2,12 +2,12 @@
 
 locals {
   node_groups = {
-    default-1 = {
+    initial-1 = {
       create  = true
       default = true
 
       labels = {
-        "node.dex4er.github.com/default" = "true"
+        "node.dex4er.github.com/initial" = "true"
       }
 
       taints = {
