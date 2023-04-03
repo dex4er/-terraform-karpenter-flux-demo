@@ -4,6 +4,7 @@ namespace: flux-system
 resources:
   - all.yaml
   - aws-load-balancer-controller.yaml
+  - coredns.yaml
   - eks-node-role-label.yaml
   - flux-system.yaml
   - karpenter.yaml
