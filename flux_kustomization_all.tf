@@ -54,6 +54,7 @@ resource "null_resource" "flux_kustomization_all" {
 
   depends_on = [
     ## Most of the dependencies here are for correct order on destroy
+    module.eks_karpenter,
     module.iam_role_cluster,
     module.iam_role_node_group,
     module.irsa_aws_load_balancer_controller,
