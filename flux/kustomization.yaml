@@ -8,4 +8,5 @@ resources:
   - eks-node-role-label.yaml
   - flux-system.yaml
   - karpenter.yaml
+  - karpenter-provisioners.yaml
   - podinfo.yaml

@@ -32,10 +32,17 @@ kubectl get kustomization -n flux-system \
   --no-headers \
   --kubeconfig <(echo "${kubeconfig}") \
   --context ${cluster_context} |
-  grep -v -P "^(all|flux-system|${kustomization_to_remove_later})" |
+  grep -v -P "^(all|flux-system|${kustomization_to_remove_later})[[:space:]]" |
   while read -r name _rest; do
     kubectl delete kustomization ${name} -n flux-system --ignore-not-found --kubeconfig <(echo "${kubeconfig}") --context ${cluster_context}
   done
+
+sleep 120
+
+kubectl delete kustomization karpenter-provisioners -n flux-system \
+  --ignore-not-found \
+  --kubeconfig <(echo "${kubeconfig}") \
+  --context ${cluster_context}
 
 sleep 120
 
@@ -43,7 +50,7 @@ kubectl get kustomization -n flux-system \
   --no-headers \
   --kubeconfig <(echo "${kubeconfig}") \
   --context ${cluster_context} |
-  grep -v -P "^(all|flux-system)" |
+  grep -v -P "^(all|flux-system)[[:space:]]" |
   while read -r name _rest; do
     kubectl delete kustomization ${name} -n flux-system \
       --ignore-not-found \
