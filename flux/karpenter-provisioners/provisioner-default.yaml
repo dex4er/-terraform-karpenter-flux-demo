@@ -34,7 +34,7 @@ spec:
       operator: In
       values:
         - ${azs_name_0}
-    - key: ubernetes.io/arch
+    - key: kubernetes.io/arch
       operator: In
       values:
         - amd64
