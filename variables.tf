@@ -40,7 +40,7 @@ variable "cluster_in_private_subnet" {
 
 variable "eks_initial_ng_zero" {
   type        = bool
-  default     = true
+  default     = false
   description = "Karpenter requires initial node group. It might migrate later to self-serviced provisioner if this initial node group is scaled to zero."
 }
 

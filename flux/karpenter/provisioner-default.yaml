@@ -10,31 +10,39 @@ spec:
   requirements:
     - key: karpenter.k8s.aws/instance-category
       operator: In
-      values: [m]
-    - key: karpenter.k8s.aws/instance-generation
-      operator: In
-      values: ["5"]
+      values:
+        - t
+        - m
     - key: karpenter.k8s.aws/instance-cpu
       operator: In
-      values: ["2"]
+      values:
+        - "2"
+    # - key: karpenter.k8s.aws/instance-memory
+    #   operator: In
+    #   values:
+    #     - "8192"
     - key: topology.kubernetes.io/zone
       operator: In
-      values: ["${azs_name_0}"]
+      values:
+        - ${azs_name_0}
     - key: ubernetes.io/arch
       operator: In
-      values: [amd64]
+      values:
+        - amd64
     - key: karpenter.sh/capacity-type
       operator: In
-      values: [spot]
+      values:
+        - spot
+        - on-demand
   kubeletConfiguration:
-    clusterDNS: [10.100.0.10]
+    clusterDNS:
+      - 10.100.0.10
     containerRuntime: containerd
     maxPods: 29
   limits:
     resources:
       cpu: 10k
-      # memory: 40Gi
   consolidation:
     enabled: true
-  # ttlSecondsAfterEmpty: 30
+  ttlSecondsUntilExpired: 3600
   weight: 1

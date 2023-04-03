@@ -19,7 +19,7 @@ locals {
       ## Node group only in first AZ
       azs = [local.azs_ids[0]]
 
-      instance_type = "m5d.large"
+      instance_type = "t3.small"
 
       ebs_optimized = false
 
@@ -44,9 +44,9 @@ locals {
       post_bootstrap_user_data = <<-EOT
       EOT
 
-      min_size     = var.eks_initial_ng_zero ? 2 : 0
-      max_size     = var.eks_initial_ng_zero ? 4 : 0
-      desired_size = var.eks_initial_ng_zero ? 2 : 0
+      min_size     = var.eks_initial_ng_zero ? 0 : 2
+      max_size     = var.eks_initial_ng_zero ? 0 : 4
+      desired_size = var.eks_initial_ng_zero ? 0 : 2
 
       capacity_type = "SPOT"
 
